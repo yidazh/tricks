@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Scrolling Board</title>
+    <link rel="stylesheet" href="../bower_components/marx/css/marx.min.css" type="text/css" media="all" />
+    <style type="text/css" media="screen">
+.record  {
+  height: 40px;
+  margin: 5px 0;
+  padding: 10px;
+  line-height: 20px;
+  border: 1px dashed #123456;
+  background-color: #ccc;
+}
+.wrapper {
+  width: 600px;
+  max-height: 232px;
+  margin: 100px auto 0;
+  padding: 0 5px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+#board.active {
+  transform: translateY(-45px);
+  transition: transform .5s linear;
+}
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="board">
+        <div class="record">Take it easy.1</div>
+        <div class="record">Take it easy.2</div>
+        <div class="record">Take it easy.3</div>
+        <div class="record">Take it easy.4</div>
+        <div class="record">Take it easy.5</div>
+        <div class="record">Take it easy.6</div>
+        <div class="record">Take it easy.7</div>
+        <div class="record">Take it easy.8</div>
+        <div class="record">Take it easy.9</div>
+        <div class="record">Take it easy.10</div>
+        <div class="record">Take it easy.11</div>
+        <div class="record">Take it easy.12</div>
+        <div class="record">Take it easy.13</div>
+        <div class="record">Take it easy.14</div>
+        <div class="record">Take it easy.15</div>
+        <div class="record">Take it easy.16</div>
+        <div class="record">Take it easy.17</div>
+        <div class="record">Take it easy.18</div>
+        <div class="record">Take it easy.19</div>
+        <div class="record">Take it easy.20</div>
+        
+      </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+(function () {
+  var board = document.getElementById('board');
+  
+
+  var scroll = function () {
+    setTimeout(function () {
+      board.classList.add('active');
+    }, 1000);
+  };
+
+  var random = function () {
+    return (Math.floor(Math.random() * 15) + 1).toString(16);
+  };
+
+  Array.prototype.forEach.call(board.querySelectorAll('.record'), function (el) {
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += random();
+    }
+    el.style.backgroundColor = color;
+  });
+
+  board.addEventListener('transitionend', function (e) {
+    board.appendChild(board.getElementsByClassName('record')[0]);
+    board.classList.remove('active');
+    scroll();
+  }, false);
+
+  scroll();
+})();
+    </script>
+  </body>
+</html>
