@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Drag</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style type="text/css" media="screen">
+.container {
+  position: relative;
+  width: 100%;
+  margin-top: 50px;
+  padding-top: 50%;
+  border: 1px dashed #1a9;
+}
+.item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  border: 1px solid #ccc;
+  color: #fff;
+  background: #1a9;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container"><div class="item" id="item"></div></div>
+    <script type="text/javascript" charset="utf-8">
+~function () {
+  var item = document.querySelector('#item');
+  var container = document.querySelector('.container');
+  var dragState = false;
+  var itemPos;
+  var startPos;
+  var itemWidth = itemHeight = 102;
+  var containerWidth = container.clientWidth;
+  var containerHeight = container.clientHeight;
+  var maxLeft = containerWidth - itemWidth;
+  var maxTop = containerHeight - itemHeight;
+
+  item.addEventListener('mousedown', function (e) {
+    if (!dragState) {
+      startPos = {x: e.clientX, y: e.clientY};
+      itemPos = { 
+        left: parseFloat(window.getComputedStyle(item).left.replace(/(px)|\s/g, '')), 
+        top: parseFloat(window.getComputedStyle(item).top.replace(/(px)|\s/g, '')),
+      };
+      console.log(itemPos);
+      dragState = true;
+    }
+  }, false);
+
+  item.addEventListener('mouseup', function (e) {
+    dragState = false;
+  }, false);
+
+
+  // do not add event listener on #item
+  window.addEventListener('mousemove', function (e) {
+    if (dragState) {
+      console.log(e);
+      moveItem({x: e.clientX, y: e.clientY});
+    }
+  }, false);
+
+  var moveItem = function (pos) {
+    var moveX = pos.x - startPos.x,
+        moveY = pos.y - startPos.y;
+    var left = itemPos.left + moveX,
+        top = itemPos.top + moveY;
+
+    left = left < 0 ? 0 : left;
+    left = left > maxLeft ? maxLeft : left;
+    top = top > maxTop ? maxTop : top;
+    top = top < 0 ? 0 : top;
+
+    item.style.top = top + 'px';
+    item.style.left = left + 'px';
+  };
+}();
+    </script>
+  </body>
+</html>
