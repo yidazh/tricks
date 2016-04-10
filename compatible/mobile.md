@@ -1,4 +1,4 @@
-###1.isiOS7绝对定位父元素下的`img`的`max-height`失效。（iPod, iOS7, Safari）
+###1.iOS7绝对定位父元素下的`img`的`max-height`失效。（iPod, iOS7, Safari）
 
 **现象:**
 
